@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const bodyparser = require('body-parser');
 const userRoute = require('./routes/user');
 
 dotenv.config();
@@ -17,7 +18,10 @@ mongoose
     console.log(err);
   });
 
-app.use('/api/user', userRoute);
+// parse request to body-psrser
+app.use(bodyparser.urlencoded({ extended: true }));
+
+app.use('/api/users', userRoute);
 
 app.listen(PORT, () => {
   console.log(`Backend server is running! http://localhost:${PORT}`);
